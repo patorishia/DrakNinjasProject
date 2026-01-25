@@ -3,7 +3,10 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --accent: #e50914; /* vermelho DrakNinja */
+  --panel: #111111;
 }
+
 
 @theme inline {
   --color-background: var(--background);
@@ -16,8 +19,11 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --accent: #e50914;
+    --panel: #111111;
   }
 }
+
 
 body {
   background: var(--background);
