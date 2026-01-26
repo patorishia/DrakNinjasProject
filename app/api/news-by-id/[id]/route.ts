@@ -2,6 +2,23 @@
 import { connectDB } from "@/lib/mongodb";
 import News from "@/models/News";
 
+
+/**
+ * GET /api/news-by-id/[id]
+ *
+ * Fetches a news article by MongoDB ObjectId.
+ * Used exclusively by the admin panel for editing.
+ *
+ * ## Params
+ * - `id` — MongoDB document ID.
+ *
+ * ## Returns
+ * - 200 → JSON with the news article.
+ * - 404 → `{ error: "Not found" }`
+ * - 500 → `{ error: "Failed to fetch news item" }`
+ */
+
+
 export async function GET(
   req: Request,
   context: { params: Promise<{ id: string }> }

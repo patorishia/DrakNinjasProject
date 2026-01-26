@@ -4,6 +4,34 @@ import * as cheerio from "cheerio";
 import News from "@/models/News";
 import { connectDB } from "./mongodb";
 
+/**
+ * Fetches the Anime News Network RSS feed, parses it, and scrapes each article
+ * to extract full HTML content and images. New articles are saved to MongoDB.
+ *
+ * ## Workflow
+ * 1. Fetch RSS XML from ANN.
+ * 2. Convert XML → JSON using xml2js.
+ * 3. Loop through each RSS item.
+ * 4. Generate a slug from the title.
+ * 5. Skip if the article already exists in the database.
+ * 6. Fetch the full article HTML using Axios.
+ * 7. Extract the main content block using Cheerio.
+ * 8. Extract the first valid image (og:image or inline <img>).
+ * 9. Save the article to MongoDB.
+ *
+ * ## Returns
+ * - `{ saved: number }` → number of new articles inserted.
+ * - `{ error: string }` → if something goes wrong.
+ *
+ * ## Notes
+ * - ANN pages have inconsistent HTML structures, so multiple selectors are tested.
+ * - If scraping fails, the RSS description is used as fallback.
+ * - This function should be called manually or via cron.
+ *
+ * @returns Promise<{ saved: number } | { error: string }>
+ */
+
+
 export async function fetchAnimeNews() {
   await connectDB();
 

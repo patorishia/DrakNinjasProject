@@ -1,5 +1,25 @@
 import mongoose, { Schema, Document, Model } from "mongoose"
 
+
+/**
+ * Mongoose schema for news articles.
+ *
+ * ## Fields
+ * - `title` — article title
+ * - `slug` — URL-friendly identifier
+ * - `excerpt` — short summary
+ * - `content` — full HTML content
+ * - `imageUrl` — main image URL
+ * - `tags` — array of strings
+ * - `publishedAt` — publication date
+ * - `isPublished` — controls visibility on the site
+ *
+ * ## Notes
+ * - Slug must be unique.
+ * - Content may contain HTML from scraping or manual editing.
+ */
+
+
 export interface INews extends Document {
   title: string
   slug: string
