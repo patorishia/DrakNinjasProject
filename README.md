@@ -30,18 +30,23 @@ Includes an admin panel for editing, publishing and managing news.
 
 ## 📂 Project Structure
 
+```
 app/
-├─ api/
-│   ├─ news/
-│   │   ├─ route.ts
-│   │   └─ [slug]/route.ts
-│   ├─ news-by-id/[id]/route.ts
-│   └─ news-fetch/route.ts
-├─ admin/
-│   └─ news/
-│       ├─ page.tsx
-│       └─ [id]/page.tsx
-└─ news/[slug]/page.tsx
+ ├─ api/
+ │   ├─ news/
+ │   │   ├─ route.ts
+ │   │   └─ [slug]/route.ts
+ │   ├─ news-by-id/
+ │   │   └─ [id]/route.ts
+ │   └─ news-fetch/
+ │       └─ route.ts
+ ├─ admin/
+ │   └─ news/
+ │       ├─ page.tsx
+ │       └─ [id]/page.tsx
+ └─ news/
+     └─ [slug]/page.tsx
+```
 
 ---
 
