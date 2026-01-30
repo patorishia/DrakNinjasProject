@@ -1,4 +1,6 @@
 // app/admin/news/page.tsx
+"use client";
+
 type NewsItem = {
   _id: string;
   title: string;
@@ -42,7 +44,7 @@ export default async function AdminNewsListPage() {
               </td>
               <td className="py-2">
                 <a
-                  href={`/admin/news/${item._id}`}
+                  href={`/admin/news/${item._id}/edit`}
                   className="text-[var(--accent)] underline"
                 >
                   Editar

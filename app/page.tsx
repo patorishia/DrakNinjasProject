@@ -11,7 +11,16 @@ async function getNews(): Promise<NewsItem[]> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/news`, {
     cache: "no-store",
   });
-  return res.json();
+  
+  if (!res.ok) {
+    console.error(`API error: ${res.status}`);
+    return [];
+  }
+  
+  const data = await res.json();
+  
+  // Ensure we return an array
+  return Array.isArray(data) ? data : [];
 }
 
 
