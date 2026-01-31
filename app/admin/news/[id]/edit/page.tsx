@@ -1,9 +1,11 @@
 "use client";
-
+import EditorToolbar from "@/components/EditorToolbar";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import Image from "@tiptap/extension-image";
+
 
 type NewsItem = {
   _id: string;
@@ -43,7 +45,7 @@ export default function AdminNewsEditPage() {
 
   // 2) Criar editor SEM conteúdo inicial
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: [StarterKit, Image],
     content: "",
     immediatelyRender: false,
     onUpdate: ({ editor }) => {
@@ -110,6 +112,7 @@ export default function AdminNewsEditPage() {
 
       {/* Editor TipTap */}
       <div className="bg-black/20 border border-gray-700 rounded-lg p-4">
+        <EditorToolbar editor={editor} />
         <EditorContent editor={editor} />
       </div>
 

@@ -5,6 +5,7 @@ type NewsItem = {
   excerpt: string;
   content: string;
   publishedAt: string;
+  createdAt?: string;
   imageUrl?: string;
 };
 
@@ -26,7 +27,9 @@ export default async function NewsPage(props: { params: Promise<{ slug: string }
       </h1>
 
       <p className="text-gray-400 text-sm mb-6">
-        {new Date(item.publishedAt).toLocaleDateString("pt-PT")}
+        {item.createdAt
+          ? new Date(item.createdAt).toLocaleDateString("pt-PT")
+          : "Sem data"}
       </p>
 
       {item.imageUrl && (

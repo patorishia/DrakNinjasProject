@@ -1,5 +1,3 @@
-// app/admin/news/page.tsx
-"use client";
 
 type NewsItem = {
   _id: string;
