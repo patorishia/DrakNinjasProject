@@ -16,6 +16,7 @@ import ListItem from "@tiptap/extension-list-item";
 import Blockquote from "@tiptap/extension-blockquote";
 import Image from "@tiptap/extension-image";
 
+
 function generateSlug(title: string) {
   return title
     .toLowerCase()
@@ -37,6 +38,7 @@ export default function CreateNewsPage() {
 
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
+  const [image, setImage] = useState("");
 
   const editor = useEditor({
     extensions: [
@@ -73,7 +75,11 @@ export default function CreateNewsPage() {
     const res = await fetch("/api/news/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(item),
+      body: JSON.stringify({
+        ...item,
+        image, 
+      })
+
     });
 
     const data = await res.json();
@@ -86,11 +92,20 @@ export default function CreateNewsPage() {
       router.push(`/admin/news/${data._id}/edit`);
     }
   };
-  
+
 
   return (
     <div className="max-w-4xl mx-auto py-10 space-y-8">
       <h1 className="text-3xl font-bold mb-6">Criar Nova Notícia</h1>
+      {/* Imagem de capa */}
+      <label className="block text-sm font-medium mb-1">Imagem de capa</label>
+      <input
+        type="text"
+        placeholder="URL da imagem"
+        value={image}
+        onChange={(e) => setImage(e.target.value)}
+        className="w-full p-2 rounded bg-[#111] border border-red-600/40"
+      />
 
       {/* Título */}
       <input

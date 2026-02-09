@@ -29,6 +29,7 @@ export interface INews extends Document {
   tags: string[]
   publishedAt: Date
   isPublished: boolean
+  image?: string
 }
 
 const NewsSchema: Schema<INews> = new Schema(
@@ -40,7 +41,11 @@ const NewsSchema: Schema<INews> = new Schema(
     imageUrl: { type: String },
     tags: [{ type: String }],
     publishedAt: { type: Date, default: Date.now },
-    isPublished: { type: Boolean, default: true }
+    isPublished: { type: Boolean, default: true },
+    image: {
+      type: String,
+      required: false,
+    },
   },
   { timestamps: true }
 )
