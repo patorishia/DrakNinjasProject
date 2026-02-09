@@ -14,8 +14,15 @@ import BulletList from "@tiptap/extension-bullet-list";
 import OrderedList from "@tiptap/extension-ordered-list";
 import ListItem from "@tiptap/extension-list-item";
 import Blockquote from "@tiptap/extension-blockquote";
-import History from "@tiptap/extension-history";
 import Image from "@tiptap/extension-image";
+
+function generateSlug(title: string) {
+  return title
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // remove acentos
+    .replace(/[^a-z0-9]+/g, "-") // troca tudo por hífen
+    .replace(/^-+|-+$/g, ""); // remove hífens do início/fim
+}
 
 export default function CreateNewsPage() {
   const router = useRouter();
@@ -32,29 +39,28 @@ export default function CreateNewsPage() {
   const [message, setMessage] = useState("");
 
   const editor = useEditor({
-  extensions: [
-    Document,
-    Paragraph,
-    Text,
-    Bold,
-    Italic,
-    Heading.configure({ levels: [1, 2, 3] }),
-    BulletList,
-    OrderedList,
-    ListItem,
-    Blockquote,
-    History,
-    Image.configure({
-      inline: false,
-      allowBase64: true,
-    }),
-  ],
-  content: "",
-  immediatelyRender: false,
-  onUpdate: ({ editor }) => {
-    setItem(prev => ({ ...prev, content: editor.getHTML() }));
-  },
-});
+    extensions: [
+      Document,
+      Paragraph,
+      Text,
+      Bold,
+      Italic,
+      Heading.configure({ levels: [1, 2, 3] }),
+      BulletList,
+      OrderedList,
+      ListItem,
+      Blockquote,
+      Image.configure({
+        inline: false,
+        allowBase64: true,
+      }),
+    ],
+    content: "",
+    immediatelyRender: false,
+    onUpdate: ({ editor }) => {
+      setItem(prev => ({ ...prev, content: editor.getHTML() }));
+    },
+  });
 
   const updateField = (field: string, value: any) => {
     setItem((prev) => ({ ...prev, [field]: value }));
@@ -80,6 +86,7 @@ export default function CreateNewsPage() {
       router.push(`/admin/news/${data._id}/edit`);
     }
   };
+  
 
   return (
     <div className="max-w-4xl mx-auto py-10 space-y-8">
@@ -89,7 +96,11 @@ export default function CreateNewsPage() {
       <input
         type="text"
         value={item.title}
-        onChange={(e) => updateField("title", e.target.value)}
+        onChange={(e) => {
+          const title = e.target.value;
+          updateField("title", title);
+          updateField("slug", generateSlug(title));
+        }}
         placeholder="Título"
         className="w-full text-4xl font-bold bg-transparent outline-none border-none"
       />

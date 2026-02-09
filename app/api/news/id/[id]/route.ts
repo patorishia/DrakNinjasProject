@@ -7,7 +7,7 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = await params; // ← AQUI ESTÁ A CORREÇÃO
+    const { id } = await params;
 
     await connectDB();
 
@@ -24,6 +24,34 @@ export async function PUT(
     return NextResponse.json(updated);
   } catch (err) {
     console.error("PUT /api/news/id/[id] error:", err);
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  }
+}
+
+export async function DELETE(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+
+    await connectDB();
+
+    const deleted = await News.findByIdAndDelete(id);
+
+    if (!deleted) {
+      return NextResponse.json(
+        { error: "Notícia não encontrada" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      { message: "Notícia eliminada com sucesso" },
+      { status: 200 }
+    );
+  } catch (err) {
+    console.error("DELETE /api/news/id/[id] error:", err);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }

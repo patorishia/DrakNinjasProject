@@ -8,6 +8,14 @@ export async function POST(req: Request) {
 
     const data = await req.json();
 
+    const exists = await News.findOne({ slug: data.slug });
+    if (exists) {
+      return NextResponse.json(
+        { error: "Slug já existe" },
+        { status: 400 }
+      );
+    }
+
     const created = await News.create(data);
 
     return NextResponse.json(created, { status: 201 });
